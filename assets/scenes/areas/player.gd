@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var jump_speed = -400
 @export var gravity = 1200
 
+
+
 func _physics_process(delta):
 	# Add gravity every frame
 	velocity.y += gravity * delta
@@ -23,4 +25,10 @@ func grab_object():
 		if body.name == "grabbable":
 			if Input.is_action_pressed("grab"):
 				print("grabbing")
-				body.global_transform = $Grab/grab_point.global_transform
+				body.global_position = $Grab/grab_point.global_position
+				body.is_grabbed = true
+			if Input.is_action_just_released("grab"):
+				print("throw")
+				body.is_grabbed = false
+				body.velocity.x = 300; #not directionally based so this will need to be changed
+				body.velocity.y = -200;
